@@ -4,13 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-
 public class XOREncryption {
     public static void main(String[] args) {
         try {
             File dataFile = new File("data.txt");
             File keyFile = new File("key.txt");
             File outputFile = new File("output.txt");
+
+            File decryptTest = new File("decrypt.txt");
 
             //initialize byte arrays
             byte[] dataBytes = new byte[(int) dataFile.length()];
@@ -19,18 +20,25 @@ public class XOREncryption {
             FileInputStream dataStream = new FileInputStream(dataFile);
             FileInputStream keyStream = new FileInputStream(keyFile);
             dataStream.read(dataBytes);
-            dataStream.read(keyBytes);
+            keyStream.read(keyBytes);
+            dataStream.close();
+            keyStream.close();
 
             for(int i = 0; i < dataBytes.length; i++){
                 int keyIndex = i % keyBytes.length;
-                System.out.println(dataBytes[i]);
-                System.out.println(keyIndex);
                 dataBytes[i] ^= keyBytes[keyIndex];
-
             }
             FileOutputStream outputStream = new FileOutputStream(outputFile);
             outputStream.write(dataBytes);
             outputStream.close();
+
+            for(int i = 0; i < dataBytes.length; i++){
+                int keyIndex = i % keyBytes.length;
+                dataBytes[i] ^= keyBytes[keyIndex];
+            }
+            FileOutputStream decryptStream = new FileOutputStream(decryptTest);
+            decryptStream.write(dataBytes);
+            decryptStream.close();
 
 
 
