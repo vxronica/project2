@@ -36,7 +36,7 @@ public class XOREncryption {
                 int keyIndex = i % keyBytes.length;
                 dataBytes[i] ^= keyBytes[keyIndex];
             }
-            FileOutputStream decryptStream = new FileOutputStream(decryptFile);
+            FileOutputStream decryptStream = new FileOutputStream(decryptTest);
             decryptStream.write(dataBytes);
             decryptStream.close();
 
